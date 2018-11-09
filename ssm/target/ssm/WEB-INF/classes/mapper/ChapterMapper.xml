@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.ChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.model.Chapter" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="N_ID" property="nId" jdbcType="DECIMAL" />
+    <result column="CHAPTER_LINK" property="chapterLink" jdbcType="VARCHAR" />
+    <association property="novel" select="getNovel" column="n_id" javaType="com.ssm.model.Novel">
+      <!-- 这里要注意的是column对应的是student中的外键，而且需是表字段名 -->
+    </association>
+
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, NAME, N_ID, CHAPTER_LINK
+  </sql>
+
+
+
+
+
+
+
+
+
+
+
+  <select id="getChaptersByNId" parameterType="int" resultType="Chapter">
+		select
+			*
+		from chapter
+		where n_id = #{id}
+	</select>
+  <select id="getNovel" resultType="Novel" parameterType="int">
+		SELECT
+			*
+		FROM novel
+		where id = #{n_id}
+	</select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.model.ChapterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CHAPTER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from CHAPTER
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    *
+    from CHAPTER
+    where rownum=1 and name = #{name,jdbcType=VARCHAR}
+
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from CHAPTER
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.model.ChapterExample" >
+    delete from CHAPTER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.model.Chapter" >
+    insert into CHAPTER (ID, NAME, N_ID, 
+      CHAPTER_LINK)
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{nId,jdbcType=DECIMAL}, 
+      #{chapterLink,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.model.Chapter" >
+    insert into CHAPTER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="nId != null" >
+        N_ID,
+      </if>
+      <if test="chapterLink != null" >
+        CHAPTER_LINK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nId != null" >
+        #{nId,jdbcType=DECIMAL},
+      </if>
+      <if test="chapterLink != null" >
+        #{chapterLink,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.model.ChapterExample" resultType="java.lang.Integer" >
+    select count(*) from CHAPTER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CHAPTER
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nId != null" >
+        N_ID = #{record.nId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.chapterLink != null" >
+        CHAPTER_LINK = #{record.chapterLink,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CHAPTER
+    set ID = #{record.id,jdbcType=DECIMAL},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      N_ID = #{record.nId,jdbcType=DECIMAL},
+      CHAPTER_LINK = #{record.chapterLink,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.model.Chapter" >
+    update CHAPTER
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nId != null" >
+        N_ID = #{nId,jdbcType=DECIMAL},
+      </if>
+      <if test="chapterLink != null" >
+        CHAPTER_LINK = #{chapterLink,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.model.Chapter" >
+    update CHAPTER
+    set NAME = #{name,jdbcType=VARCHAR},
+      N_ID = #{nId,jdbcType=DECIMAL},
+      CHAPTER_LINK = #{chapterLink,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.ExcerptMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.model.Excerpt" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_PERSON" property="createPerson" jdbcType="DECIMAL" />
+    <result column="SOURCE" property="source" jdbcType="DECIMAL" />
+    <result column="LIKE_NUM" property="likeNum" jdbcType="DECIMAL" />
+    <result column="E_COMMENT" property="eComment" jdbcType="VARCHAR" />
+    <association property="user" select="getUser" column="CREATE_PERSON" javaType="com.ssm.model.User">
+      <!-- 这里要注意的是column对应的是student中的外键，而且需是表字段名 -->
+    </association>
+    <association property="novel" select="getNovel" column="SOURCE" javaType="com.ssm.model.Novel">
+      <!-- 这里要注意的是column对应的是student中的外键，而且需是表字段名 -->
+    </association>
+  <!--  <collection property="chapters" ofType="Chapter" select="getChapter" column="id">
+    </collection>-->
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CONTENT, CREATE_TIME, CREATE_PERSON, SOURCE, LIKE_NUM, E_COMMENT
+  </sql>
+  <select id="getNovel" resultType="Novel" parameterType="DECIMAL">
+		SELECT
+			*
+		FROM novel
+		where id = #{SOURCE}
+	</select>
+  <select id="getUser" resultType="User" parameterType="DECIMAL">
+		SELECT
+			*
+		FROM novel
+		where id = #{CREATE_PERSON}
+	</select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.model.ExcerptExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EXCERPT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from EXCERPT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from EXCERPT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.model.ExcerptExample" >
+    delete from EXCERPT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.model.Excerpt" >
+    insert into EXCERPT (ID, CONTENT, CREATE_TIME, 
+      CREATE_PERSON, SOURCE, LIKE_NUM, 
+      E_COMMENT)
+    values (#{id,jdbcType=DECIMAL}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createPerson,jdbcType=DECIMAL}, #{source,jdbcType=DECIMAL}, #{likeNum,jdbcType=DECIMAL}, 
+      #{eComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.model.Excerpt" >
+    insert into EXCERPT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createPerson != null" >
+        CREATE_PERSON,
+      </if>
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="likeNum != null" >
+        LIKE_NUM,
+      </if>
+      <if test="eComment != null" >
+        E_COMMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPerson != null" >
+        #{createPerson,jdbcType=DECIMAL},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=DECIMAL},
+      </if>
+      <if test="likeNum != null" >
+        #{likeNum,jdbcType=DECIMAL},
+      </if>
+      <if test="eComment != null" >
+        #{eComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.model.ExcerptExample" resultType="java.lang.Integer" >
+    select count(*) from EXCERPT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update EXCERPT
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createPerson != null" >
+        CREATE_PERSON = #{record.createPerson,jdbcType=DECIMAL},
+      </if>
+      <if test="record.source != null" >
+        SOURCE = #{record.source,jdbcType=DECIMAL},
+      </if>
+      <if test="record.likeNum != null" >
+        LIKE_NUM = #{record.likeNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.eComment != null" >
+        E_COMMENT = #{record.eComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update EXCERPT
+    set ID = #{record.id,jdbcType=DECIMAL},
+      CONTENT = #{record.content,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{record.createPerson,jdbcType=DECIMAL},
+      SOURCE = #{record.source,jdbcType=DECIMAL},
+      LIKE_NUM = #{record.likeNum,jdbcType=DECIMAL},
+      E_COMMENT = #{record.eComment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.model.Excerpt" >
+    update EXCERPT
+    <set >
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPerson != null" >
+        CREATE_PERSON = #{createPerson,jdbcType=DECIMAL},
+      </if>
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=DECIMAL},
+      </if>
+      <if test="likeNum != null" >
+        LIKE_NUM = #{likeNum,jdbcType=DECIMAL},
+      </if>
+      <if test="eComment != null" >
+        E_COMMENT = #{eComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.model.Excerpt" >
+    update EXCERPT
+    set CONTENT = #{content,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=DECIMAL},
+      SOURCE = #{source,jdbcType=DECIMAL},
+      LIKE_NUM = #{likeNum,jdbcType=DECIMAL},
+      E_COMMENT = #{eComment,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

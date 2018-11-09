@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.NovelReviewReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.model.NovelReviewReply" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="N_R_ID" property="nRId" jdbcType="DECIMAL" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="RP_ID" property="rpId" jdbcType="DECIMAL" />
+    <result column="LIKE_NUM" property="likeNum" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <resultMap id="UserResultMap" type="com.ssm.model.NovelReviewReply" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="N_R_ID" property="nRId" jdbcType="DECIMAL" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="RP_ID" property="rpId" jdbcType="DECIMAL" />
+    <result column="LIKE_NUM" property="likeNum" jdbcType="DECIMAL" />
+    <association property="user" select="getUser" column="u_id" javaType="com.ssm.model.User">
+      <!-- 这里要注意的是column对应的是student中的外键，而且需是表字段名 -->
+    </association>
+  </resultMap>
+  <resultMap id="NRRVO" type="com.ssm.model.NovelReviewReply" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="N_R_ID" property="nRId" jdbcType="DECIMAL" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="RP_ID" property="rpId" jdbcType="DECIMAL" />
+
+    <association property="user" select="getUser" column="u_id" javaType="com.ssm.model.User">
+      <!-- 这里要注意的是column对应的是student中的外键，而且需是表字段名 -->
+    </association>
+    <collection property="novelReviewReplies" ofType="NovelReviewReply" select="getNovelReviewReply" column="id">
+    </collection>
+  </resultMap>
+
+
+  <select id="getUser" resultType="User" parameterType="DECIMAL">
+		SELECT
+			*
+		FROM USER_01
+		where id = #{uid}
+	</select>
+
+  <select id="getNovelReviewReply" resultType="NovelReviewReply" parameterType="DECIMAL">
+		SELECT
+			*
+		FROM NOVEL_REVIEW_REPLY
+		where ID = #{rpid}
+	</select>
+
+  <select id="getNovelReviewReplysByNRID" resultMap="NRRVO" parameterType="DECIMAL">
+		SELECT
+			*
+		FROM NOVEL_REVIEW_REPLY
+		where id = #{nrid}
+	</select>
+
+  <select id="getCountOfNRRByRpId" resultType="java.lang.Integer" parameterType="DECIMAL">
+    select count(*) from NOVEL_REVIEW_REPLY where rp_id=#{rpid}
+  </select>
+
+  <select id="getNRRByRpID" resultMap="NRRVO" parameterType="DECIMAL">
+    select * from NOVEL_REVIEW_REPLY where RP_ID=#{rpid}
+  </select>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, U_ID, N_R_ID, CONTENT, CREATE_TIME, RP_ID, LIKE_NUM
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.model.NovelReviewReplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from NOVEL_REVIEW_REPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="UserResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from NOVEL_REVIEW_REPLY
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from NOVEL_REVIEW_REPLY
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.model.NovelReviewReplyExample" >
+    delete from NOVEL_REVIEW_REPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.model.NovelReviewReply" >
+    insert into NOVEL_REVIEW_REPLY (ID, U_ID, N_R_ID, 
+      CONTENT, CREATE_TIME, RP_ID, 
+      LIKE_NUM)
+    values (#{id,jdbcType=DECIMAL}, #{uId,jdbcType=DECIMAL}, #{nRId,jdbcType=DECIMAL}, 
+      #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{rpId,jdbcType=DECIMAL}, 
+      #{likeNum,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.model.NovelReviewReply" >
+    insert into NOVEL_REVIEW_REPLY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="nRId != null" >
+        N_R_ID,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="rpId != null" >
+        RP_ID,
+      </if>
+      <if test="likeNum != null" >
+        LIKE_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="nRId != null" >
+        #{nRId,jdbcType=DECIMAL},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rpId != null" >
+        #{rpId,jdbcType=DECIMAL},
+      </if>
+      <if test="likeNum != null" >
+        #{likeNum,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.model.NovelReviewReplyExample" resultType="java.lang.Integer" >
+    select count(*) from NOVEL_REVIEW_REPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update NOVEL_REVIEW_REPLY
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.uId != null" >
+        U_ID = #{record.uId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nRId != null" >
+        N_R_ID = #{record.nRId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rpId != null" >
+        RP_ID = #{record.rpId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.likeNum != null" >
+        LIKE_NUM = #{record.likeNum,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update NOVEL_REVIEW_REPLY
+    set ID = #{record.id,jdbcType=DECIMAL},
+      U_ID = #{record.uId,jdbcType=DECIMAL},
+      N_R_ID = #{record.nRId,jdbcType=DECIMAL},
+      CONTENT = #{record.content,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      RP_ID = #{record.rpId,jdbcType=DECIMAL},
+      LIKE_NUM = #{record.likeNum,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.model.NovelReviewReply" >
+    update NOVEL_REVIEW_REPLY
+    <set >
+      <if test="uId != null" >
+        U_ID = #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="nRId != null" >
+        N_R_ID = #{nRId,jdbcType=DECIMAL},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rpId != null" >
+        RP_ID = #{rpId,jdbcType=DECIMAL},
+      </if>
+      <if test="likeNum != null" >
+        LIKE_NUM = #{likeNum,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.model.NovelReviewReply" >
+    update NOVEL_REVIEW_REPLY
+    set U_ID = #{uId,jdbcType=DECIMAL},
+      N_R_ID = #{nRId,jdbcType=DECIMAL},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      RP_ID = #{rpId,jdbcType=DECIMAL},
+      LIKE_NUM = #{likeNum,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

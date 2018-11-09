@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+  <title>摘文网</title>
+  <!-- BOOTSTRAP CORE STYLE  -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<!-- FONT AWESOME ICONS  -->
+<link href="css/font-awesome.css" rel="stylesheet">
+<!-- CUSTOM STYLE  -->
+<link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="edit/dist/summernote.css">
+
+
+  <script src="js/jquery-1.11.1.js"></script>
+  <!-- BOOTSTRAP SCRIPTS  -->
+  <script src="js/bootstrap.js"></script>
+
+  <script src="js/jquery.json.min.js"></script>
+  <script src="js/jquery.i18n.properties.js"></script>
+  <script src="edit/dist/summernote.js"></script>
+  <style type="text/css">
+
+
+    .menu {
+      width : 75px;
+      height:60px;
+      visibility:hidden;
+      position : absolute;
+    }
+    .menu ul li {
+      width : 70px;
+      height:25px;
+      padding: 2px;
+      list-style:none;
+      background:#0e76a8;
+
+
+    }
+    .zh{
+      font-family: 楷体;
+      font-size: medium;
+      font-style: normal;
+    }
+    .en{
+      font-family: 楷体;
+      font-size:xx-large;
+      font-style: normal;
+    }
+  </style>
+  <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <strong>Email: </strong>info@yourdomain.com &nbsp;&nbsp; <strong>Support: </strong>+90-897-678-44 </div>
+      </div>
+    </div>
+  </header>
+  <!-- HEADER END-->
+  <div class="navbar navbar-inverse set-radius-zero">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+       <div class="zh">摘文网</div><br>
+          <div class="en">zhaiwenwang</div>
+        </a>
+      </div>
+      <div class="left-div">
+        <div class="user-settings-wrapper">
+          <ul class="nav">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                <span class="glyphicon glyphicon-user" style="font-size: 25px;"></span>
+              </a>
+              <div class="dropdown-menu dropdown-settings">
+                <div class="media">
+                  <a class="media-left" href="#">
+                    <img src="assets/img/64-64.jpg" alt="" class="img-rounded">
+                  </a>
+                  <div class="media-body">
+                    <h4 class="media-heading">Jhon Deo Alex </h4>
+                    <h5 id="role">Developer &amp; Designer</h5>
+                  </div>
+                </div>
+                <hr>
+                <h5><strong>Personal Bio : </strong></h5> Anim pariatur cliche reprehen derit.
+                <hr>
+                <a href="#" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="login.html" class="btn btn-danger btn-sm">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- LOGO HEADER END-->
+  <section class="menu-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="navbar-collapse collapse ">
+            <ul id="menu-top" class="nav navbar-nav navbar-right">
+              <li><a href="" id="index">Dashboard</a></li>
+              <li><a href="" id="second">UI Elements</a></li>
+              <li><a href="" id="thrid">Data Tables</a></li>
+              <li><a  href="" id="four">Forms</a></li>
+              <li><a href="" id="five">Login Page</a></li>
+              <li><a href="" id="six">Blank Page</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- MENU SECTION END-->
+  <div class="py-5 text-center"  id="gsInfo"  onmousedown="if(event.button == 2) showGRMenu()" onclick="hideGRMenu()" >
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="page-head-line">Forms </h1>
+        </div>
+      </div>
+      <div class="py-5 text-center" >
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1 class="mb-3"><div id="chapter">第四百一十五章 昔日遗从，杀戮之仆；遗弃之地，神格之乱</div></h1>
+              <p>###content###</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- CONTENT-WRAPPER SECTION END-->
+    </div>
+  </div>
+  <!-- CONTENT-WRAPPER SECTION END-->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12"> © 2015 YourCompany | By : <a href="http://www.designbootstrap.com/" target="_blank">DesignBootstrap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- FOOTER SECTION END-->
+  <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+  <!-- CORE JQUERY SCRIPTS -->
+
+
+  <script type="text/javascript">
+
+      $(function(){
+          jQuery.i18n.properties({//加载properties文件
+              name:'project',//properties文件的名称
+              path:'config/',//properties文件的路径
+              mode:'map',//用map的方式使用资源文件中的值
+              language: 'en', // 对应的语言
+              cache: false,
+              encoding: 'UTF-8',
+              callback:function(){
+                  $('#index').attr('href',$.i18n.prop("ssmpath")+"index.jsp");//根据key值取得需要的资源
+                  $('#second').attr('href',$.i18n.prop("ssmpath")+"");
+                  $('#thrid').attr('href',$.i18n.prop("ssmpath")+"");
+                  $('#four').attr('href',$.i18n.prop("ssmpath")+"");
+                  $('#five').attr('href',$.i18n.prop("ssmpath")+"");
+                  $('#six').attr('href',$.i18n.prop("ssmpath")+"");
+
+
+              }
+          });
+          var user;
+          $.ajax({url:"${pageContext.request.contextPath}/user/getUserInfo",
+              dataType : "json",
+              type: "get",
+              async:false,
+              success:function(data){
+                  code=eval("("+data+")");
+
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  console.log(XMLHttpRequest.status);
+                  console.log(XMLHttpRequest.readyState);
+                  console.log(textStatus);
+              }
+
+          });
+
+      })
+      document.oncontextmenu = function(){
+          return false;
+      }
+      var str;
+
+      function showGRMenu() {
+          str = window.getSelection?window.getSelection().toString():document.selection.createRange().text;
+          if(str == ""){
+              return;
+          }
+
+          var menu = g('menuGS');
+
+          var e = event || window.event;
+          var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+          var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+          var x = e.pageX || e.clientX + scrollX;
+          var y = e.pageY || e.clientY + scrollY;
+
+          menu.style.left = x + "px";
+
+          menu.style.top =y + "px";
+
+          /*设置菜单可见*/
+          menu.style.visibility = "visible";
+      };
+      function hideGRMenu() {
+          if (g('menuGS').style.visibility = 'visible'){
+              g('menuGS').style.visibility = 'hidden';
+          }
+      };
+      function check_All(name,menuId){
+          var menu=g(menuId);
+          menu.style.visibility = 'hidden';
+          alert(str);
+
+      };
+      $(function() {
+          $('#myModal').on('show.bs.modal', function () {
+              var menu=g('menuGS');
+              $("#content").text(str);
+              $('.summernote').summernote({
+                  height: 300,
+                  tabsize: 2
+              });
+              //	$('#editor').wysiwyg();
+              menu.style.visibility = 'hidden';
+          })
+      });
+      function clear_All(name,menuId){
+          var arr=gn(name);
+          var menu=g(menuId);
+          var i;
+          for(i=0;i<arr.length;i++){
+              arr[i].checked=false;
+          }
+          menu.style.visibility = 'hidden';
+      };
+      function g(id) {
+          return document.getElementById(id);
+      };
+
+      function gn(name){
+          return document.getElementsByName(name);
+      };
+      function getUser(){
+          var user;
+          $.ajax({url:link+"user/getUserInfo",
+              dataType : "jsonp",
+              //           xhrFields: {
+              //   withCredentials: true // 携带跨域cookie
+              //},
+              jsonp:"callback",
+              type: "get",
+
+              async:false,
+              data:{
+                  "user":getCookie("username")
+              },
+              success:function(data){
+
+                  // alert(data.user.toString());
+                  if(data.user!='0'){
+                      // alert(data.user.toString());
+                      console.log(data.role);
+                      $(".media-heading").text(data.username);
+                      if(data.role==0)
+                          $("#role").text("普通用户");
+                      if(data.role==1)
+                          $("#role").text("作者");
+                      //$(".media-heading").text(data.username);
+                      //$(".media-heading").text(data.username);
+                  }
+                  else
+                      $(".media-heading").text("未登录");
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  console.log(XMLHttpRequest.status);
+                  console.log(XMLHttpRequest.readyState);
+                  console.log(textStatus);
+              }
+
+          });
+      }
+      function getCookie(cname) {
+          var name = cname + "=";
+          var ca = document.cookie.split(';');
+          for(var i=0; i<ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0)==' ') c = c.substring(1);
+              if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+          }
+          return "";
+      }
+
+
+      function upload(){
+          var comment= $($(".summernote").summernote("code")).text();
+          var chapter=$($("#chapter")).text();
+          var name=getCookie("username");
+          console.log(comment);
+          console.log(chapter);
+          console.log(str);
+          console.log(name);
+          $.ajax({url:link+"/excerpt/add",
+              dataType : "jsonp",
+              jsonp:"callback",
+              type: "get",
+
+              async:false,
+              data:{
+                  'name':name,
+                  'content':str,
+                  'comment':comment,
+                  'chapter':chapter
+              },
+              success:function(data){
+
+                  if(data.status=="1"){
+                      alert("发布成功");
+
+                  }
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  console.log(XMLHttpRequest.status);
+                  console.log(XMLHttpRequest.readyState);
+                  console.log(textStatus);
+              }
+
+          });
+      }
+      function show(){
+          var comment= $($(".summernote").summernote("code")).text();
+          alert(comment);
+      }
+  </script>
+  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
+
+  <div  id='menuGS' class="menu">
+    <ul>
+      <li name="check-all" ><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">发布</button></li>
+
+      <li  name="clear-all" onclick="clear_All('groupstates','menuGS')">全清 </li>
+    </ul>
+
+  </div>
+  <!-- 模态框（Modal） -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">书摘发布</h4>
+        </div>
+        <div class="modal-body" >
+
+          <p ><div id="content">在这里添加一些文本</div>
+          </p>
+
+          <!--编辑器-->
+          <hr>
+
+          <div class="summernote"></div>
+          <!--编辑器-->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary">提交更改</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+</body>
+
+</html>
